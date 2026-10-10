@@ -56,14 +56,6 @@ public:
         return true;
     }
 
-    void exibirPedidoAtual() {
-        if (!emConstrucao) {
-            cout << "Nenhum pedido em construcao." << endl;
-            return;
-        }
-        pedidoAtual.exibir();
-    }
-
     // ---------- RF02 ----------
     bool adicionarItem(string nome, float preco) {
         if (!emConstrucao) {
@@ -82,6 +74,7 @@ public:
         pilhaDesfazer.empilhar(Acao("ADICIONAR", nome, preco, pos, 0.0,
                                     "Adicionou " + nome));
         cout << "Item adicionado." << endl;
+        pedidoAtual.exibir();
         return true;
     }
 
@@ -100,6 +93,7 @@ public:
         pilhaDesfazer.empilhar(Acao("REMOVER", nome, preco, pos, 0.0,
                                     "Removeu " + nome));
         cout << "Item removido." << endl;
+        pedidoAtual.exibir();
         return true;
     }
 
@@ -116,6 +110,7 @@ public:
         pilhaDesfazer.empilhar(Acao("DESCONTO", "", 0.0, -1, anterior,
                                     "Aplicou desconto"));
         cout << "Desconto aplicado." << endl;
+        pedidoAtual.exibir();
         return true;
     }
 
@@ -138,6 +133,7 @@ public:
             pedidoAtual.aplicarDesconto(a.descontoAnterior);
         }
         cout << "Desfeito: " << a.descricao << endl;
+        pedidoAtual.exibir();
         return true;
     }
 
