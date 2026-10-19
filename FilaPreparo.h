@@ -6,19 +6,24 @@
 
 using namespace std;
 
+// Representa a fila de pedidos que estao sendo preparados.
+// A fila guarda os pedidos em ordem de chegada e permite
+// inserir, remover, consultar e exibir os itens na fila.
 class FilaPreparo {
 private:
-    NoFila* inicio;
-    NoFila* fim;
-    int tamanho;
+    NoFila* inicio; // Primeiro elemento da fila.
+    NoFila* fim;    // Ultimo elemento da fila.
+    int tamanho;   // Quantidade de pedidos na fila.
 
 public:
+    // Inicializa a fila vazia.
     FilaPreparo() {
         inicio = nullptr;
         fim = nullptr;
         tamanho = 0;
     }
 
+    // Libera todos os nos da fila ao destruir o objeto.
     ~FilaPreparo() {
         Pedido descartado;
         while (desenfileirar(descartado)) {}
@@ -28,14 +33,17 @@ public:
     FilaPreparo(const FilaPreparo&) = delete;
     FilaPreparo& operator=(const FilaPreparo&) = delete;
 
+    // Retorna true se a fila estiver vazia.
     bool estaVazia() {
         return inicio == nullptr;
     }
 
+    // Retorna o numero de pedidos atualmente armazenados.
     int getTamanho() {
         return tamanho;
     }
 
+    // Insere um novo pedido no final da fila.
     void enfileirar(Pedido p) {
         NoFila* novo = new NoFila(p);
         if (estaVazia()) {
@@ -47,6 +55,7 @@ public:
         tamanho++;
     }
 
+    // Remove o pedido do inicio da fila e retorna o valor em saida.
     bool desenfileirar(Pedido &saida) {
         if (estaVazia()) return false;
         NoFila* removido = inicio;
@@ -58,6 +67,7 @@ public:
         return true;
     }
 
+    // Consulta o proximo pedido sem removelo da fila.
     bool peek(Pedido &saida) {
         if (estaVazia()) return false;
         saida = inicio->dado;
@@ -89,6 +99,7 @@ public:
         return true;
     }
 
+    // Exibe todos os pedidos da fila em ordem de atendimento.
     void exibir() {
         if (estaVazia()) {
             cout << "Fila de preparo vazia." << endl;

@@ -6,19 +6,25 @@
 
 using namespace std;
 
+// Lista duplamente encadeada que armazena os pedidos.
 class ListaPedidos {
 private:
+    // Ponteiros para o primeiro e o ultimo no da lista.
     NoLista* inicio;
     NoLista* fim;
+    // Quantidade de pedidos armazenados.
     int tamanho;
 
 public:
+    // Inicializa a lista vazia.
     ListaPedidos() {
         inicio = nullptr;
         fim = nullptr;
         tamanho = 0;
     }
 
+    // Libera todos os nos da lista ao destruir o objeto.
+    // Evita vazamento de memoria.
     ~ListaPedidos() {
         NoLista* atual = inicio;
         while (atual != nullptr) {
@@ -32,24 +38,30 @@ public:
     ListaPedidos(const ListaPedidos&) = delete;
     ListaPedidos& operator=(const ListaPedidos&) = delete;
 
+    // Verifica se nao ha pedidos na lista.
     bool estaVazia() {
         return inicio == nullptr;
     }
 
+    // Retorna a quantidade de nos armazenados.
     int getTamanho() {
         return tamanho;
     }
 
+    // Retorna o primeiro no da lista.
     NoLista* getInicio() {
         return inicio;
     }
 
+    // Retorna o ultimo no da lista.
     NoLista* getFim() {
         return fim;
     }
 
     // ---------- Insercoes ----------
 
+    // Insere um novo pedido antes do primeiro no.
+    // como a lista é duplamente encadeada, o novo no passa a ser o primeiro e o antigo primeiro passa a ser o segundo.
     void inserirNoInicio(Pedido p) {
         NoLista* novo = new NoLista(p);
         if (estaVazia()) {
@@ -63,6 +75,8 @@ public:
         tamanho++;
     }
 
+    // Insere um novo pedido depois do ultimo no.
+    // como a lista é duplamente encadeada, o novo no passa a ser o ultimo e o antigo ultimo passa a ser o penultimo.
     void inserirNoFim(Pedido p) {
         NoLista* novo = new NoLista(p);
         if (estaVazia()) {
@@ -77,6 +91,7 @@ public:
     }
 
     // Posicao de 0 a tamanho. Retorna false se invalida.
+    // Insercao no meio da lista, deslocando os nos seguintes.
     bool inserirEmPosicao(int pos, Pedido p) {
         if (pos < 0 || pos > tamanho) return false;
         if (pos == 0) {
@@ -104,6 +119,7 @@ public:
 
     // ---------- Buscas ----------
 
+    // Procura e retorna o no cujo pedido tem o numero informado.
     NoLista* buscarPorNumero(int numero) {
         NoLista* atual = inicio;
         while (atual != nullptr) {
@@ -132,6 +148,7 @@ public:
     // ---------- Remocao ----------
 
     // Remove o pedido com esse numero (inicio, meio ou fim). Retorna false se nao existir.
+    // Ajusta os ponteiros dos nos vizinhos e libera a memoria do no removido.
     bool removerPorNumero(int numero) {
         NoLista* alvo = buscarPorNumero(numero);
         if (alvo == nullptr) return false;
@@ -155,6 +172,7 @@ public:
 
     // ---------- Percursos ----------
 
+    // Exibe os pedidos do inicio ao fim da lista.
     void percorrerParaFrente() {
         if (estaVazia()) {
             cout << "Historico vazio." << endl;
@@ -168,6 +186,7 @@ public:
         }
     }
 
+    // Exibe os pedidos do fim ao inicio da lista.
     void percorrerParaTras() {
         if (estaVazia()) {
             cout << "Historico vazio." << endl;
@@ -183,6 +202,8 @@ public:
 
     // ---------- Relatorio (RF11) ----------
 
+    // Soma e retorna o valor total de todos os pedidos.
+    // Retorna 0.0 se a lista estiver vazia.
     float calcularTotalVendido() {
         float soma = 0.0;
         NoLista* atual = inicio;
