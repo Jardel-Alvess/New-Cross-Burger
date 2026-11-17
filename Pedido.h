@@ -6,17 +6,23 @@
 
 using namespace std;
 
+// Quantidade maxima de itens que um pedido pode armazenar.
 const int MAX_ITENS = 20;
 
+// Representa um pedido de um cliente e os itens comprados.
 struct Pedido {
+    // Identificacao do pedido e nome do cliente.
     int numero;
     string cliente;
-    string itens[MAX_ITENS];
+    // Nomes e precos dos itens ficam associados pelo mesmo indice.
+    string itens[MAX_ITENS]; // dois arrays
     float precos[MAX_ITENS];
+    // Quantidade de itens e valores usados no calculo do pedido.
     int qtdItens;
     float desconto;   // percentual (0 a 100)
     float total;
 
+    // Inicializa um pedido vazio com valores padrao.
     Pedido() {
         numero = 0;
         cliente = "";
@@ -25,6 +31,7 @@ struct Pedido {
         total = 0.0;
     }
 
+    // Inicializa um pedido vazio com numero e cliente informados.
     Pedido(int numero, string cliente) {
         this->numero = numero;
         this->cliente = cliente;
@@ -33,6 +40,7 @@ struct Pedido {
         total = 0.0;
     }
 
+    // Soma os precos dos itens e aplica o desconto ao subtotal.
     void recalcularTotal() {
         float subtotal = 0.0;
         for (int i = 0; i < qtdItens; i++) {
@@ -41,10 +49,11 @@ struct Pedido {
         total = subtotal * (1.0 - desconto / 100.0);
     }
 
-    // Insere na posicao pos (0 a qtdItens). Retorna false se cheio ou posicao invalida.
+    // Insere numa posicao especifica pos (0 a qtdItens), deslocando os itens seguintes.
+    // Retorna false se o pedido estiver cheio ou a posicao for invalida.
     bool inserirItemEm(int pos, string nome, float preco) {
         if (qtdItens >= MAX_ITENS || pos < 0 || pos > qtdItens) return false;
-        for (int i = qtdItens; i > pos; i--) {
+        for (int i = qtdItens; i > pos; i--) { //empurra itens 
             itens[i] = itens[i - 1];
             precos[i] = precos[i - 1];
         }
@@ -55,11 +64,13 @@ struct Pedido {
         return true;
     }
 
+    // Adiciona um item ao final do pedido.
     bool adicionarItem(string nome, float preco) {
         return inserirItemEm(qtdItens, nome, preco);
     }
 
-    // Retorna o indice do ultimo item com esse nome, ou -1 se nao existir.
+    // Busca de tras para frente e retorna o ultimo indice com esse nome,
+    // ou -1 se o item nao existir.
     int buscarItem(string nome) {
         for (int i = qtdItens - 1; i >= 0; i--) {
             if (itens[i] == nome) return i;
@@ -67,6 +78,8 @@ struct Pedido {
         return -1;
     }
 
+    // Remove o item da posicao informada e desloca os seguintes.
+    // retorna false se a posicao for invalida.
     bool removerItemEm(int pos) {
         if (pos < 0 || pos >= qtdItens) return false;
         for (int i = pos; i < qtdItens - 1; i++) {
@@ -78,6 +91,7 @@ struct Pedido {
         return true;
     }
 
+    // Define um desconto valido (de 0 a 100 por cento) e atualiza o total.
     bool aplicarDesconto(float percentual) {
         if (percentual < 0 || percentual > 100) return false;
         desconto = percentual;
@@ -85,6 +99,7 @@ struct Pedido {
         return true;
     }
 
+    // Exibe os dados do pedido.
     void exibir() {
         cout << "Pedido #" << numero << " | Cliente: " << cliente << endl;
         for (int i = 0; i < qtdItens; i++) {

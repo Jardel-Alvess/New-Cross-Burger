@@ -7,6 +7,8 @@
 
 using namespace std;
 
+// Le uma linha de texto e encerra o programa se a entrada for finalizada.
+// Retorna a linha lida, sem o caractere de nova linha.
 string lerTexto(string mensagem) {
     cout << mensagem;
     string s;
@@ -17,6 +19,7 @@ string lerTexto(string mensagem) {
     return s;
 }
 
+// Le um numero inteiro, repetindo a solicitacao ate receber um valor valido.
 int lerInt(string mensagem) {
     while (true) {
         string s = lerTexto(mensagem);
@@ -29,6 +32,8 @@ int lerInt(string mensagem) {
     }
 }
 
+// Le um numero decimal, aceitando virgula ou ponto como separador decimal.
+// Repete a solicitacao ate receber um valor valido.
 float lerFloat(string mensagem) {
     while (true) {
         string s = lerTexto(mensagem);
@@ -44,6 +49,7 @@ float lerFloat(string mensagem) {
     }
 }
 
+// Exibe as opcoes disponiveis no menu principal.
 void exibirMenu() {
     cout << endl;
     cout << "========== NEW CROSS BURGER ==========" << endl;
@@ -74,12 +80,14 @@ void exibirMenu() {
     cout << "  0. Sair" << endl;
 }
 
+// Executa o menu e encaminha cada opcao para a operacao correspondente.
 int main() {
-    cout << fixed << setprecision(2);
+    cout << fixed << setprecision(2); // Formata numeros decimais com 2 casas apos a virgula
 
     Sistema sistema;
     int opcao = -1;
 
+    // Mantem o sistema em execucao ate o usuario escolher sair.
     while (opcao != 0) {
         exibirMenu();
         opcao = lerInt("Opcao: ");
@@ -87,7 +95,7 @@ int main() {
 
         switch (opcao) {
             case 1:  sistema.novoPedido(lerTexto("Cliente: ")); break;
-            case 2: {
+            case 2: { // declara variaveis locais para o escopo do case
                 string nome = lerTexto("Item: ");
                 float preco = lerFloat("Preco: R$ ");
                 sistema.adicionarItem(nome, preco);
