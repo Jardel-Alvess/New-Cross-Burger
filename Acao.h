@@ -1,5 +1,5 @@
-#ifndef ACAO_H
-#define ACAO_H
+#ifndef ACAO_H // Proteção contra inclusões múltiplas deste cabeçalho.
+#define ACAO_H  // Define o nome do cabeçalho para evitar múltiplas inclusões.
 
 // Fornece o tipo string usado para armazenar textos.
 #include <string>

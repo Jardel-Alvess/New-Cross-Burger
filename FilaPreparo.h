@@ -58,9 +58,9 @@ public:
     // Remove o pedido do inicio da fila e retorna o valor em saida.
     bool desenfileirar(Pedido &saida) {
         if (estaVazia()) return false;
-        NoFila* removido = inicio;
-        saida = removido->dado;
-        inicio = inicio->proximo;
+        NoFila* removido = inicio;          //anota
+        saida = removido->dado;            //copia
+        inicio = inicio->proximo;          //avança
         if (inicio == nullptr) fim = nullptr;
         delete removido;
         tamanho--;

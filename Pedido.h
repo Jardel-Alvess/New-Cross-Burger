@@ -15,7 +15,7 @@ struct Pedido {
     int numero;
     string cliente;
     // Nomes e precos dos itens ficam associados pelo mesmo indice.
-    string itens[MAX_ITENS];
+    string itens[MAX_ITENS]; // dois arrays
     float precos[MAX_ITENS];
     // Quantidade de itens e valores usados no calculo do pedido.
     int qtdItens;
@@ -41,7 +41,6 @@ struct Pedido {
     }
 
     // Soma os precos dos itens e aplica o desconto ao subtotal.
-    //recalcula sempre que um item for adicionado, removido ou o desconto for alterado.
     void recalcularTotal() {
         float subtotal = 0.0;
         for (int i = 0; i < qtdItens; i++) {
@@ -50,11 +49,11 @@ struct Pedido {
         total = subtotal * (1.0 - desconto / 100.0);
     }
 
-    // Insere na posicao pos (0 a qtdItens), deslocando os itens seguintes.
+    // Insere numa posicao especifica pos (0 a qtdItens), deslocando os itens seguintes.
     // Retorna false se o pedido estiver cheio ou a posicao for invalida.
     bool inserirItemEm(int pos, string nome, float preco) {
         if (qtdItens >= MAX_ITENS || pos < 0 || pos > qtdItens) return false;
-        for (int i = qtdItens; i > pos; i--) {
+        for (int i = qtdItens; i > pos; i--) { //empurra itens 
             itens[i] = itens[i - 1];
             precos[i] = precos[i - 1];
         }
@@ -100,7 +99,7 @@ struct Pedido {
         return true;
     }
 
-    // Exibe os dados do pedido, seus itens, desconto e total.
+    // Exibe os dados do pedido.
     void exibir() {
         cout << "Pedido #" << numero << " | Cliente: " << cliente << endl;
         for (int i = 0; i < qtdItens; i++) {

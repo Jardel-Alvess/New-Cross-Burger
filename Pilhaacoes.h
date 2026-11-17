@@ -44,7 +44,7 @@ public:
     // Acoes sao armazenadas em ordem inversa a que foram realizadas, para permitir desfazer.
     void empilhar(Acao a) {
         NoPilha* novo = new NoPilha(a);
-        novo->proximo = topo;
+        novo->proximo = topo;          //antigo
         topo = novo;
         tamanho++;
     }
@@ -61,8 +61,7 @@ public:
         return true;
     }
 
-    // Copia a acao do topo para saida sem remove-la; retorna false se vazia.
-    // Será util para exibir a acao que sera desfeita, sem alterar a pilha.
+    // é util para exibir a acao que sera desfeita, sem alterar a pilha.
     bool peek(Acao &saida) {
         if (estaVazia()) return false;
         saida = topo->dado;
